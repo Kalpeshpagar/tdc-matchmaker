@@ -123,10 +123,8 @@ const getMatchLabel = (score) => {
   return "Low Compatibility ⚪";
 };
 
-// ─── Controllers ──────────────────────────────────────────────────────────
 
-// @desc  Get ranked matches for a customer
-// @route GET /api/matches/:customerId
+// Get ranked matches for a customer
 const getMatches = async (req, res) => {
   try {
     const customer = await Customer.findById(req.params.customerId);
@@ -159,8 +157,7 @@ const getMatches = async (req, res) => {
   }
 };
 
-// @desc  "Send Match" — mock email/notification
-// @route POST /api/matches/:customerId/send
+// "Send Match" — mock email/notification
 const sendMatch = async (req, res) => {
   try {
     const { matchId } = req.body;
@@ -171,7 +168,7 @@ const sendMatch = async (req, res) => {
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    // Simulate sending — in production this would trigger an email service
+    // as email
     res.json({
       success: true,
       message: `Match sent to ${customer.firstName} ${customer.lastName}!`,
@@ -190,8 +187,7 @@ const sendMatch = async (req, res) => {
   }
 };
 
-// @desc  Generate AI intro email using OpenAI
-// @route POST /api/matches/:customerId/ai-intro
+// Generate AI intro email using OpenAI
 const generateAIIntro = async (req, res) => {
   try {
     const { matchId } = req.body;
@@ -221,11 +217,11 @@ Write a short, warm 3-sentence introduction email from the matchmaker introducin
     const intro = completion.choices[0].message.content;
     res.json({ intro });
   } catch (error) {
-    // Fallback if OpenAI key not set
+    // if OpenAI key not set
     const customer = await Customer.findById(req.params.customerId);
     const matchProfile = await Customer.findById(req.body.matchId);
-    const fallback = `Dear ${customer?.firstName}, we have found a wonderful match for you! ${matchProfile?.firstName} from ${matchProfile?.city} is a ${matchProfile?.designation} who shares similar values and life goals. We believe you two would make a great connection — we look forward to hearing your thoughts!`;
-    res.json({ intro: fallback });
+    const response = `Dear ${customer?.firstName}, we have found a wonderful match for you! ${matchProfile?.firstName} from ${matchProfile?.city} is a ${matchProfile?.designation} who shares similar values and life goals. We believe you two would make a great connection — we look forward to hearing your thoughts!`;
+    res.json({ intro: response });
   }
 };
 

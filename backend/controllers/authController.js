@@ -6,8 +6,7 @@ const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 };
 
-// @desc  Login matchmaker
-// @route POST /api/auth/login
+// login controller
 const login = async (req, res) => {
   const { email, password } = req.body;
 
@@ -33,8 +32,7 @@ const login = async (req, res) => {
   }
 };
 
-// @desc  Get logged-in matchmaker
-// @route GET /api/auth/me
+// get user profile controller
 const getMe = async (req, res) => {
   res.json(req.user);
 };

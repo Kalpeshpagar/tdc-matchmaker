@@ -37,13 +37,13 @@ export default function CustomerDetailPage() {
     const { data } = await api.post(`/api/customers/${id}/notes`, { text: noteText })
     setCustomer(data)
     setNoteText('')
-    showToast('✅ Note saved!')
+    showToast('Note saved!')
   }
 
   const updateStatus = async (statusTag) => {
     const { data } = await api.patch(`/api/customers/${id}/status`, { statusTag })
     setCustomer(data)
-    showToast(`✅ Status updated to ${statusTag}`)
+    showToast(`Status updated to ${statusTag}`)
   }
 
   const sendMatch = async (matchId, matchName) => {
@@ -100,7 +100,7 @@ export default function CustomerDetailPage() {
         <div className={styles.statusChanger}>
           <label>Update Status</label>
           <select value={customer.statusTag} onChange={e => updateStatus(e.target.value)}>
-            {['New','Active','Matched','On Hold','Closed'].map(s => <option key={s}>{s}</option>)}
+            {['New', 'Active', 'Matched', 'On Hold', 'Closed'].map(s => <option key={s}>{s}</option>)}
           </select>
         </div>
       </div>
@@ -164,7 +164,8 @@ export default function CustomerDetailPage() {
               {matches.map(({ candidate, score, reasons, label }) => (
                 <div key={candidate._id} className={styles.matchCard}>
                   <div className={styles.matchHeader}>
-                    <div className={styles.matchAvatar}>{candidate.firstName[0]}{candidate.lastName[0]}</div>
+                    <div className={styles.matchAvatar}>{candidate.firstName[0]}{candidate.lastName[0]}
+                    </div>
                     <div className={styles.matchInfo}>
                       <h3>{candidate.firstName} {candidate.lastName}</h3>
                       <p>{candidate.designation} · {candidate.city} · {candidate.age} yrs</p>
@@ -179,20 +180,20 @@ export default function CustomerDetailPage() {
                   </div>
                   {aiIntro[candidate._id] && (
                     <div className={styles.aiIntro}>
-                      <p className={styles.aiLabel}>✨ AI-Generated Intro</p>
+                      <p className={styles.aiLabel}> AI-Generated Intro</p>
                       <p>{aiIntro[candidate._id]}</p>
                     </div>
                   )}
                   <div className={styles.matchActions}>
                     <button className={styles.aiBtn} onClick={() => getAIIntro(candidate._id)} disabled={loadingAI[candidate._id]}>
-                      {loadingAI[candidate._id] ? 'Generating...' : '✨ AI Intro'}
+                      {loadingAI[candidate._id] ? 'Generating...' : 'AI Intro'}
                     </button>
                     <button
                       className={`${styles.sendBtn} ${sentMatches[candidate._id] ? styles.sentBtn : ''}`}
                       onClick={() => sendMatch(candidate._id, `${candidate.firstName} ${candidate.lastName}`)}
                       disabled={sentMatches[candidate._id]}
                     >
-                      {sentMatches[candidate._id] ? '✅ Match Sent' : '💌 Send Match'}
+                      {sentMatches[candidate._id] ? 'Match Sent' : ' Send Match'}
                     </button>
                   </div>
                 </div>

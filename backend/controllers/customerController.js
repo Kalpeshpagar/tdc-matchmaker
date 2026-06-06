@@ -1,8 +1,7 @@
 const Customer = require("../models/Customer");
 const { generateDummyProfiles } = require("../data/dummyProfiles");
 
-// @desc  Get all real customers assigned to logged-in matchmaker
-// @route GET /api/customers
+// Get all real customers assigned to logged-in matchmaker
 const getCustomers = async (req, res) => {
   try {
     const customers = await Customer.find({
@@ -15,8 +14,7 @@ const getCustomers = async (req, res) => {
   }
 };
 
-// @desc  Get a single customer by ID
-// @route GET /api/customers/:id
+// Get a single customer by ID
 const getCustomerById = async (req, res) => {
   try {
     const customer = await Customer.findById(req.params.id).populate(
@@ -30,8 +28,7 @@ const getCustomerById = async (req, res) => {
   }
 };
 
-// @desc  Add a note to a customer
-// @route POST /api/customers/:id/notes
+// Add a note to a customer
 const addNote = async (req, res) => {
   try {
     const { text } = req.body;
@@ -46,8 +43,7 @@ const addNote = async (req, res) => {
   }
 };
 
-// @desc  Update customer status tag
-// @route PATCH /api/customers/:id/status
+// Update customer status tag
 const updateStatus = async (req, res) => {
   try {
     const { statusTag } = req.body;
@@ -63,8 +59,7 @@ const updateStatus = async (req, res) => {
   }
 };
 
-// @desc  Seed dummy profiles into DB (dev use)
-// @route POST /api/customers/seed
+// Seed dummy profiles into DB
 const seedDummyProfiles = async (req, res) => {
   try {
     // Remove old dummy profiles

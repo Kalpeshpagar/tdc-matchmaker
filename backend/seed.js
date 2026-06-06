@@ -14,7 +14,6 @@ const connectDB = async () => {
 const seed = async () => {
   await connectDB();
 
-  // Clear existing
   await Matchmaker.deleteMany({});
   await Customer.deleteMany({});
   console.log("Cleared existing data");
@@ -26,7 +25,7 @@ const seed = async () => {
     password: "tdc@123",
     role: "matchmaker",
   });
-  console.log(`✅ Matchmaker created: ${matchmaker.email} / tdc@123`);
+  console.log(`Matchmaker created: ${matchmaker.email} / tdc@123`);
 
   // Create 5 sample real customers (mix of male and female)
   const sampleCustomers = [
@@ -190,16 +189,9 @@ const seed = async () => {
   await Customer.insertMany(sampleCustomers);
   console.log(`Created ${sampleCustomers.length} sample customers`);
 
-  // Seed dummy profiles
   const dummies = generateDummyProfiles(100);
   await Customer.insertMany(dummies);
   console.log(`Seeded ${dummies.length} dummy profiles`);
-
-  console.log("\nSeed complete!");
-  console.log("─────────────────────────────────");
-  console.log("Login: matchmaker@tdc.com");
-  console.log("Password: tdc@123");
-  console.log("─────────────────────────────────");
 
   mongoose.disconnect();
 };
